@@ -1,53 +1,41 @@
-#include <Arduino.h>
-#include <esp_sntp.h>
-#include <TimeLib.h>
-#include <WiFi.h>
-#include "wifi_info.h"
+#include "Clock.h"
 
-
-StaticJsonDocument<128> wifi_config;
-deserializeJson(wifi_config, config_json);
-
-const char* ssid      = WIFI_SSID;
-const char* password  = WIFI_PASS;
-const char* ntpServer = "ntp.nict.jp";
-const long  gmtOffset_sec = 32400;
-const int   daylightOffset_sec = 0;
-
-void WifiSyncJST()
+void Clock::wifiSyncJST()
 {
-  //---------内蔵時計のJST同期--------
-  // WiFi接続
+    //---------内蔵時計のJST同期--------
+    // WiFi接続
     WiFi.begin(ssid, password);
-    Serial.println("Connecting to WiFi");
+    #if SERIAL_ENABLE
+        Serial.println("Connecting to WiFi");
+    #endif
     while (WiFi.status() != WL_CONNECTED){
-        Serial.print(".");
+        #if SERIAL_ENABLE
+            Serial.print(".");
+        #endif
     }
-    Serial.println("Connected");
+    #if SERIAL_ENABLE
+        Serial.println("Connected");
+    #endif
     // NTPサーバからJST取得
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
     delay(1000);
     // 内蔵時計の時刻がNTP時刻に合うまで待機
-    Serial.println("Waiting for NTP time sync");
+    #if SERIAL_ENABLE
+        Serial.println("Waiting for NTP time sync");
+    #endif
     while (sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET)
     {
         delay(1000);
     }
-    Serial.println("NTP time synced");
+    #if SERIAL_ENABLE
+        Serial.println("NTP time synced");
+    #endif
     // WiFi切断
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
 }
 
-struct tm *tm;
-
-void setup()
-{
-    Serial.begin(9600);
-    WifiSyncJST();
-}
-
-void loop()
+void Clock::getDateTimeString()
 {
     time_t now = time(NULL);
     tm = localtime(&now);
@@ -57,5 +45,5 @@ void loop()
     hour = tm->tm_hour;
     minute = tm->tm_min;
     second = tm->tm_sec;
-    Serial.printf("%d/%d %d:%d:%d\n", month, day, hour, minute, second);
+    return String(month) + "/" + String(day) + " " + String(hour) + ":" + String(minute) + ":" + String(second);
 }
