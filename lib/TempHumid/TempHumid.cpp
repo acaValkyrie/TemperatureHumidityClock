@@ -1,22 +1,10 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <TimeLib.h>
-#define ADR 0x38
+#include "TempHumid.h"
 
-void setup()
-{
-    Wire.begin();
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    float hu, tp;
+void TempHumid::retrieveData(){
     uint8_t buf[8];
     long a;
     int flg;
 
-    delay(500);
     flg = 1;
     while (flg)
     {
@@ -30,23 +18,30 @@ void loop()
         Wire.requestFrom(ADR, 6);
         for (uint8_t i = 0; i < 6; i++)  buf[i] = Wire.read();
 
-        if (buf[0] & 0x80) Serial.println("Measurement not Comp");
-        else flg = 0;
+        if (buf[0] & 0x80) {
+
+        }
+        else{ flg = 0;}
     }
     a = buf[1];
     a <<= 8;
     a |= buf[2];
     a <<= 4;
     a |= ((buf[3] >> 4) & 0x0f);
-    hu = a / 10485.76;
+    humidity = a / 10485.76;
 
     a = (buf[3] & 0xf);
     a <<= 8;
     a |= buf[4];
     a <<= 8;
     a |= buf[5];
-    tp = a / 5242.88 - 50;
+    temperature = a / 5242.88 - 50;
+}
 
-    Serial.print("T=" + String(tp) + "'C ");
-    Serial.println("H=" + String(hu) + "%");
+float TempHumid::getTemperature(){
+    return temperature;
+}
+
+float TempHumid::getHumidity(){
+    return humidity;
 }
