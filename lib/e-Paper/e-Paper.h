@@ -16,9 +16,6 @@ unsigned long time_now_s;
 #define COLORED     0
 #define UNCOLORED   1
 
-class Display{
-    public:
-        void ();
-};
+void setDataOnDisplay(String data_string);
 
 #endif

@@ -1,6 +1,6 @@
 #include "e-Paper.h"
 
-void setup()
+void setDataOnDisplay(String data_string)
 {
 
   epd.LDirInit();
@@ -10,6 +10,8 @@ void setup()
   paint.SetHeight(24);
 
   paint.Clear(COLORED);
+  char data_char_array[data_string.length + 1];
+  data_string.toCharArray(data_char_array, data_string.length + 1);
   paint.DrawStringAt(30, 4, "Hello world!", &Font16, UNCOLORED);
   epd.SetFrameMemory(paint.GetImage(), 0, 10, paint.GetWidth(), paint.GetHeight());
 
@@ -42,9 +44,4 @@ void setup()
   epd.HDirInit();
   epd.Clear();
   epd.Sleep();
-}
-
-void loop()
-{
-
 }
