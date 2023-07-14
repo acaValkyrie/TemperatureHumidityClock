@@ -5,16 +5,17 @@
 #include "e-Paper.h"
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   Wire.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // measure temp and humid
+  // get_time
+  // update display
 
-
-  unsigned long interval = 10800; // unit:sec
-  esp_sleep_enable_timer_wakeup(interval*1000000);
+  // sleep 3hours
+  unsigned long interval = 3*60*60; // unit:sec
+  esp_sleep_enable_timer_wakeup(interval*1000*1000/*us*/);
   esp_deep_sleep_start();
 }
