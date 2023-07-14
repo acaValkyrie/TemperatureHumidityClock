@@ -24,7 +24,11 @@
  * THE SOFTWARE.
  */
 
+#if (defined(__AVR__))
 #include <avr/pgmspace.h>
+#else
+#include "pgmspace.h"
+#endif
 #include "epdpaint.h"
 
 Paint::Paint(unsigned char* image, int width, int height) {

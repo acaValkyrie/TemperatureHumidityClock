@@ -10,9 +10,9 @@ void setDataOnDisplay(String data_string)
   paint.SetHeight(24);
 
   paint.Clear(COLORED);
-  char data_char_array[data_string.length + 1];
-  data_string.toCharArray(data_char_array, data_string.length + 1);
-  paint.DrawStringAt(30, 4, "Hello world!", &Font16, UNCOLORED);
+  char data_char_array[data_string.length() + 1];
+  data_string.toCharArray(data_char_array, data_string.length() + 1);
+  paint.DrawStringAt(30, 4, data_char_array, &Font16, UNCOLORED);
   epd.SetFrameMemory(paint.GetImage(), 0, 10, paint.GetWidth(), paint.GetHeight());
 
   paint.Clear(UNCOLORED);

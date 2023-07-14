@@ -4,9 +4,15 @@
 #include "TempHumid.h"
 #include "e-Paper.h"
 
+TempHumid tempHumid;
+
 void setup() {
   Serial.begin(9600);
   Wire.begin();
+  tempHumid.retrieveData();
+  float temperature = tempHumid.getTemperature();
+  float humidity = tempHumid.getHumidity();
+  setDataOnDisplay("temp: " + String(temperature) + "C, humid: " + String(humidity) + "%");
 }
 
 void loop() {

@@ -35,7 +35,7 @@ void Clock::wifiSyncJST()
     WiFi.mode(WIFI_OFF);
 }
 
-void Clock::getDateTimeString()
+String Clock::getDateTimeString()
 {
     time_t now = time(NULL);
     tm = localtime(&now);
