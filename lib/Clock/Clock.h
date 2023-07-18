@@ -1,3 +1,6 @@
+#ifndef CLOCK_H
+#define CLOCK_H
+
 #include <Arduino.h>
 #include <esp_sntp.h>
 #include <TimeLib.h>
@@ -21,3 +24,5 @@ class Clock
 };
 
 struct tm *tm;
+
+#endif
