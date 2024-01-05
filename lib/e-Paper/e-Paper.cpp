@@ -1,5 +1,9 @@
 #include "e-Paper.h"
 
+Epd epd;
+unsigned char image[1024];
+Paint paint(image, 0, 0);
+
 void setDataOnDisplay(String data_string)
 {
 
