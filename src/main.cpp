@@ -12,7 +12,7 @@ void setup() {
   tempHumid.retrieveData();
   float temperature = tempHumid.getTemperature();
   float humidity = tempHumid.getHumidity();
-  setDataOnDisplay("temp: " + String(temperature) + "C, humid: " + String(humidity) + "%");
+  setDataOnDisplay(String(temperature) + "C" + String(humidity) + "%");
 }
 
 void loop() {
