@@ -6,22 +6,26 @@
 
 TempHumid tempHumid;
 
+const int ledPin = 20;
+
 void setup() {
-  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
   Wire.begin();
-  tempHumid.retrieveData();
-  float temperature = tempHumid.getTemperature();
-  float humidity = tempHumid.getHumidity();
-  setDataOnDisplay(String(temperature) + "C" + String(humidity) + "%");
+  setupDisplay();
 }
+// 24.97 59.2
 
 void loop() {
   // measure temp and humid
   // get_time
   // update display
-
-  // sleep 3hours
-  unsigned long interval = 3*60*60; // unit:sec
-  esp_sleep_enable_timer_wakeup(interval*1000*1000/*us*/);
-  esp_deep_sleep_start();
+  
+  tempHumid.retrieveData();
+  float temperature = tempHumid.getTemperature();
+  float humidity = tempHumid.getHumidity();
+  // setDataOnDisplay(String(temperature));
+  // digitalWrite(ledPin, HIGH);
+  delay(1000);
+  digitalWrite(ledPin, LOW);
+  delay(1000);
 }

@@ -2,18 +2,16 @@
 #define E_PAPER_H
 
 #include <SPI.h>
-#include "epd1in54_V2.h"
-#include "imagedata.h"
-#include "epdpaint.h"
+#include "EPD1in54.h"
+#include "EPDPaint.h"
 #include <stdio.h>
-
-
 
 // unsigned long time_start_ms;
 // unsigned long time_now_s;
 #define COLORED     0
 #define UNCOLORED   1
 
+void setupDisplay();
 void setDataOnDisplay(String data_string);
 
 #endif
