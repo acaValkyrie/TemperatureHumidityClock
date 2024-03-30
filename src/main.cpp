@@ -6,14 +6,14 @@
 
 TempHumid tempHumid;
 
-const int ledPin = 20;
-
 void setup() {
-  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
   Wire.begin();
-  setupDisplay();
+  tempHumid.retrieveData();
+  float temperature = tempHumid.getTemperature();
+  float humidity = tempHumid.getHumidity();
+  setDataOnDisplay(String(temperature) + "C" + String(humidity) + "%");
 }
-// 24.97 59.2
 
 void loop() {
   // measure temp and humid

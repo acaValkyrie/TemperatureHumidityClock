@@ -1,7 +1,7 @@
 /**
- *  @filename   :   EPDIF.cpp
+ *  @filename   :   epdif.cpp
  *  @brief      :   Implements EPD interface functions
- *                  Users have to implement all the functions in EPDIF.cpp
+ *                  Users have to implement all the functions in epdif.cpp
  *  @author     :   Yehui from Waveshare
  *
  *  Copyright (C) Waveshare     August 10 2017
@@ -25,35 +25,40 @@
  * THE SOFTWARE.
  */
 
-#include "EPDIF.h"
+#include "epdif.h"
 #include <SPI.h>
 
-EPDIF::EPDIF(unsigned int reset, unsigned int dc, unsigned int cs, unsigned int busy) {
-  resetPin = reset;
-  dcPin = dc;
-  csPin = cs;
-  busyPin = busy;
+EpdIf::EpdIf() {
 };
 
-EPDIF::~EPDIF() {
+EpdIf::~EpdIf() {
 };
 
-void EPDIF::delayMs(unsigned int delaytime) {
-  delay(delaytime);
+void EpdIf::DigitalWrite(int pin, int value) {
+    digitalWrite(pin, value);
 }
 
-void EPDIF::spiTransfer(unsigned char data) {
-  digitalWrite(csPin, LOW);
-  SPI.transfer(data);
-  digitalWrite(csPin, HIGH);
+int EpdIf::DigitalRead(int pin) {
+    return digitalRead(pin);
 }
 
-int EPDIF::ifInit() {
-  pinMode(csPin, OUTPUT);
-  pinMode(resetPin, OUTPUT);
-  pinMode(dcPin, OUTPUT);
-  pinMode(busyPin, INPUT);
-  SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
-  SPI.begin();
-  return 0;
+void EpdIf::DelayMs(unsigned int delaytime) {
+    delay(delaytime);
+}
+
+void EpdIf::SpiTransfer(unsigned char data) {
+    digitalWrite(CS_PIN, LOW);
+    SPI.transfer(data);
+    digitalWrite(CS_PIN, HIGH);
+}
+
+int EpdIf::IfInit(void) {
+    pinMode(CS_PIN, OUTPUT);
+    pinMode(RST_PIN, OUTPUT);
+    pinMode(DC_PIN, OUTPUT);
+    pinMode(BUSY_PIN, INPUT); 
+
+    SPI.begin();
+    SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
+    return 0;
 }

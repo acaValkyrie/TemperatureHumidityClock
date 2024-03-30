@@ -4,7 +4,7 @@
   * @author  MCD Application Team
   * @version V1.0.0
   * @date    18-February-2014
-  * @brief   This file provides text Font8 for STM32xx-EVAL's LCD driver.
+  * @brief   This file provides text Font8 for STM32xx-EVAL's LCD driver. 
   ******************************************************************************
   * @attention
   *
@@ -37,17 +37,17 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "fonts.h"
-#if defined(__AVR__) || defined(ARDUINO_ARCH_SAMD)
+#if (defined(__AVR__))
 #include <avr/pgmspace.h>
-#elif defined(ESP8266) || defined(ESP32)
-#include <pgmspace.h>
+#else
+#include "pgmspace.h"
 #endif
 
-//
+// 
 //  Font data for Courier New 12pt
-//
+// 
 
-const uint8_t Font8_Table[] PROGMEM =
+const uint8_t Font8_Table[] PROGMEM = 
 {
 	// @0 ' ' (5 pixels wide)
 	0x00, //      

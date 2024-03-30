@@ -4,7 +4,7 @@
   * @author  MCD Application Team
   * @version V1.0.0
   * @date    18-February-2014
-  * @brief   This file provides text font20 for STM32xx-EVAL's LCD driver.
+  * @brief   This file provides text font20 for STM32xx-EVAL's LCD driver. 
   ******************************************************************************
   * @attention
   *
@@ -37,14 +37,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "fonts.h"
-#if defined(__AVR__) || defined(ARDUINO_ARCH_SAMD)
+#if (defined(__AVR__))
 #include <avr/pgmspace.h>
-#elif defined(ESP8266) || defined(ESP32)
-#include <pgmspace.h>
+#else
+#include "pgmspace.h"
 #endif
 
 // Character bitmaps for Courier New 15pt
-const uint8_t Font20_Table[] PROGMEM =
+const uint8_t Font20_Table[] PROGMEM = 
 {
 	// @0 ' ' (14 pixels wide)
 	0x00, 0x00, //               

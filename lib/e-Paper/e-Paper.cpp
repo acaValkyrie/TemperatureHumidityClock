@@ -5,6 +5,7 @@
 #include "epdpaint.h"
 
 Epd epd;
+Epd epd;
 unsigned char image[1024];
 Paint paint(image, 0, 0);
 byte HL = 0;
