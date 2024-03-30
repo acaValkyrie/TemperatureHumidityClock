@@ -1,5 +1,10 @@
 #include "TempHumid.h"
 
+TempHumid::TempHumid(){
+    temperature = 0.0f;
+    humidity = 0.0f;
+}
+
 void TempHumid::retrieveData(){
     uint8_t buf[8];
     long a;

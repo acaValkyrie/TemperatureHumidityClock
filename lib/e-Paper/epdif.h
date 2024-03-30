@@ -1,7 +1,7 @@
 /**
- *  @filename   :   epdif.h
- *  @brief      :   Header file of epdif.cpp providing EPD interface functions
- *                  Users have to implement all the functions in epdif.cpp
+ *  @filename   :   EPDIF.h
+ *  @brief      :   Header file of EPDIF.cpp providing EPD interface functions
+ *                  Users have to implement all the functions in EPDIF.cpp
  *  @author     :   Yehui from Waveshare
  *
  *  Copyright (C) Waveshare     August 10 2017
@@ -30,22 +30,20 @@
 
 #include <Arduino.h>
 
-// Pin definition
-#define DC_PIN          3
-#define RST_PIN         4
-#define BUSY_PIN        5
-#define CS_PIN          2
+class EPDIF {
+ public:
+  EPDIF(unsigned int reset, unsigned int dc, unsigned int cs, unsigned int busy);
+  ~EPDIF(void);
 
-class EpdIf {
-public:
-    EpdIf(void);
-    ~EpdIf(void);
+  int  ifInit();
+  static void delayMs(unsigned int delaytime);
+  void spiTransfer(unsigned char data);
 
-    static int  IfInit(void);
-    static void DigitalWrite(int pin, int value); 
-    static int  DigitalRead(int pin);
-    static void DelayMs(unsigned int delaytime);
-    static void SpiTransfer(unsigned char data);
+ protected:
+  unsigned int resetPin;
+  unsigned int dcPin;
+  unsigned int csPin;
+  unsigned int busyPin;
 };
 
 #endif
