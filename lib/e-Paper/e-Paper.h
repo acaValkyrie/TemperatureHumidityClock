@@ -1,21 +1,13 @@
 #ifndef E_PAPER_H
 #define E_PAPER_H
 
-#include <SPI.h>
-#include "epd1in54_V2.h"
-#include "imagedata.h"
-#include "epdpaint.h"
 #include <stdio.h>
+#include <Arduino.h>
 
-Epd epd;
-unsigned char image[1024];
-Paint paint(image, 0, 0);
-
-unsigned long time_start_ms;
-unsigned long time_now_s;
 #define COLORED     0
 #define UNCOLORED   1
 
-void setDataOnDisplay(String data_string);
+void setupDisplay();
+void setDataOnDisplay(String data_string1, String data_string2);
 
 #endif

@@ -9,19 +9,24 @@ TempHumid tempHumid;
 void setup() {
   Serial.begin(9600);
   Wire.begin();
-  tempHumid.retrieveData();
-  float temperature = tempHumid.getTemperature();
-  float humidity = tempHumid.getHumidity();
-  setDataOnDisplay("temp: " + String(temperature) + "C, humid: " + String(humidity) + "%");
+  setupDisplay();
+  // tempHumid.retrieveData();
+  // float temperature = tempHumid.getTemperature();
+  // float humidity = tempHumid.getHumidity();
+  // setDataOnDisplay("temp: " + String(temperature) + "C, humid: " + String(humidity) + "%");
 }
 
 void loop() {
   // measure temp and humid
   // get_time
   // update display
+  tempHumid.retrieveData();
+  float temperature = tempHumid.getTemperature();
+  float humidity = tempHumid.getHumidity();
+  setDataOnDisplay("temp:" + String(temperature) + "C", "humid:" + String(humidity) + "%");
 
   // sleep 3hours
-  unsigned long interval = 3*60*60; // unit:sec
-  esp_sleep_enable_timer_wakeup(interval*1000*1000/*us*/);
-  esp_deep_sleep_start();
+  int interval = 30; // unit:sec
+  // esp_deep_sleep(interval*1000*1000/*us*/);
+  delay(interval*1000);
 }
