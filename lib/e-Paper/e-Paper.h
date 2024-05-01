@@ -8,6 +8,8 @@
 #define UNCOLORED   1
 
 void setupDisplay();
-void setDataOnDisplay(String data_string1, String data_string2);
+void sleepDisplay();
+void resetDisplay();
+void setDataOnDisplay(String temperature, String humidity, String time);
 
 #endif
