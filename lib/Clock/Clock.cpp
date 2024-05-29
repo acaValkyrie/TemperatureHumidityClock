@@ -1,6 +1,14 @@
 #include "Clock.h"
 
-void Clock::wifiSyncJST()
+const char* ssid      = WIFI_SSID;
+const char* password  = WIFI_PASS;
+const char* ntpServer = "ntp.nict.jp";
+const long  gmtOffset_sec = 32400;
+const int   daylightOffset_sec = 0;
+
+const int timeout = 5000;
+
+bool Clock::wifiSyncJST()
 {
     //---------内蔵時計のJST同期--------
     // WiFi接続
@@ -8,10 +16,20 @@ void Clock::wifiSyncJST()
     #if SERIAL_ENABLE
         Serial.println("Connecting to WiFi");
     #endif
+    int count = 0;
     while (WiFi.status() != WL_CONNECTED){
         #if SERIAL_ENABLE
             Serial.print(".");
         #endif
+        delay(1);
+        count++;
+        if (count > timeout)
+        {
+            #if SERIAL_ENABLE
+                Serial.println("WiFi connection timeout");
+            #endif
+            return false;
+        }
     }
     #if SERIAL_ENABLE
         Serial.println("Connected");
@@ -33,11 +51,13 @@ void Clock::wifiSyncJST()
     // WiFi切断
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
+    return true;
 }
 
 String Clock::getDateTimeString()
 {
     time_t now = time(NULL);
+    struct tm *tm;
     tm = localtime(&now);
     int month, day, hour, minute, second;
     month = tm->tm_mon + 1;
@@ -45,5 +65,8 @@ String Clock::getDateTimeString()
     hour = tm->tm_hour;
     minute = tm->tm_min;
     second = tm->tm_sec;
-    return String(month) + "/" + String(day) + " " + String(hour) + ":" + String(minute) + ":" + String(second);
+    char time_char_array[20];
+    sprintf(time_char_array, "%02d/%02d %02d:%02d", month, day, hour, minute);
+    return String(time_char_array);
+    //return String(month) + "/" + String(day) + " " + String(hour) + ":" + String(minute); // + ":" + String(second);
 }

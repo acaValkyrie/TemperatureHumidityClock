@@ -11,6 +11,7 @@ class TempHumid{
         float temperature;
         float humidity;
     public:
+        TempHumid();
         void retrieveData();
         float getTemperature();
         float getHumidity();
